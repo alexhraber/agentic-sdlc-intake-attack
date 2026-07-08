@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0.0",
+  "template_version": "scaffold-v3",
+  "generated_at": "1783538603Z",
+  "repo_signal_fingerprint": "e409609feca1daaf942815c47a0758f862c62e0134d0c6d553cfca5c6195e76e",
+  "files": [
+    {
+      "path": ".decapod/generated/specs/README.md",
+      "template_hash": "7a85d851e4e267dd9eec6ae0dee0417fd6ff3dbca435bc92c6e9aa7c26487813",
+      "content_hash": "2302b1a87172d023033c79a0335b8031a9dfbc087b819f25d60c5549b33f3dee"
+    },
+    {
+      "path": ".decapod/generated/specs/INTENT.md",
+      "template_hash": "e6c06430e23ca87ae33169a6b1f9c70a3fd283655f5b5b29755fb83181f989e9",
+      "content_hash": "59eab3f3d40cb8b78708fa4dc4df5fd0bb6a9079cfaecce52e971eb897d3de70"
+    },
+    {
+      "path": ".decapod/generated/specs/ARCHITECTURE.md",
+      "template_hash": "f81224214db72e367670029174b0b69cf21ea2240d14ba936257324f2a9449d7",
+      "content_hash": "21b39394d66a044ae82ffebf418bd872f4c1f59cd3ad88c46a544a05e1933fa1"
+    },
+    {
+      "path": ".decapod/generated/specs/INTERFACES.md",
+      "template_hash": "15cc8c3bbfe951da695384106eb78a44c7af28ddc002bcc83c8a7770229fe999",
+      "content_hash": "627caf33e7606dbd88fddca4e2b70e975596dfa49e0e051661c745f2950e3d00"
+    },
+    {
+      "path": ".decapod/generated/specs/VALIDATION.md",
+      "template_hash": "2779e85d72593f90b0f8f79fcbf4e382daf59b49610e821b9704cd0e26862c18",
+      "content_hash": "e2c4c4186fa3a789e6881d26b7b5101c5734d804822198ab7b3fa7460b271302"
+    },
+    {
+      "path": ".decapod/generated/specs/SEMANTICS.md",
+      "template_hash": "3a79850c94b81e29c6462a7ea70d45198252e3eeba2132c6e9206f7b4e4a5829",
+      "content_hash": "3c5e981c8ec4b3a336b94704a85ac84da90104093389519aa0bbb84a164405e0"
+    },
+    {
+      "path": ".decapod/generated/specs/OPERATIONS.md",
+      "template_hash": "54ab819ae22bea9f786793a37196749cbacd72c60f58108898e9db044c534acf",
+      "content_hash": "1c6e2a2585e800487d904f8b18bbed1fd606fd050981cd703e847431f49bdab7"
+    },
+    {
+      "path": ".decapod/generated/specs/SECURITY.md",
+      "template_hash": "b283bdc62b7c2fce411becf6b31928d1b3502da28be7ad618531e3e1820fc147",
+      "content_hash": "b9d04e9e901988450f24fd9cc14f3ecc866e08f6d47bad1c980d50e1a4377a90"
+    }
+  ]
+}

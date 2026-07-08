@@ -1,0 +1,22 @@
+schema_version = "1.0.0"
+
+[init]
+specs = true
+ci = true
+diagram_style = "mermaid"
+entrypoints = [
+    "AGENTS.md",
+    "CLAUDE.md",
+    "GEMINI.md",
+    "CODEX.md",
+]
+
+[repo]
+product_name = "agentic-sdlc-intake-attack"
+product_summary = "Create a defensive incident-writeup repository for the agentic SDLC intake attack, documenting how fake GitHub accounts used issue comments and malicious ZIP artifacts to smuggle executable payloads into autonomous coding-agent workflows, with safe static-analysis notes, IOCs, detection guidance, and governance policy that prevents untrusted collaboration content from becoming agent action."
+architecture_direction = "research"
+done_criteria = "Done when the repository safely documents the agentic SDLC intake attack end-to-end, including evidence-bound static analysis, IOCs, threat model, detection guidance, artifact-handling rules, and governance policy proving that untrusted collaboration content cannot become autonomous agent execution."
+primary_languages = ["Python"]
+external_tracker = false
+container_workspaces = true
+mode = "local"
