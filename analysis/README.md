@@ -1,21 +1,7 @@
-# Analysis Notes
+# Defensive Analysis Directory
 
-This directory is reserved for publication-safe analysis notes.
+This directory is reserved for local analysis notes, intermediate triage reports, and forensic worksheets.
 
-Allowed:
-
-- static-analysis summaries;
-- hash manifests;
-- redacted metadata;
-- evidence-bound behavior notes;
-- safe diagrams;
-- non-executable derived observations.
-
-Not allowed:
-
-- raw malware;
-- executable payloads;
-- password-protected malware archives;
-- live secrets;
-- raw environment captures;
-- third-party sandbox submissions without authorization.
+## Safe Handling Guidelines
+- Do not store raw executable payloads or active malware files in this directory.
+- Use only non-executable, sanitized evidence files (e.g. JSON metadata, log snippets, hex/string dumps).

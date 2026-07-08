@@ -1,0 +1,88 @@
+#!/usr/bin/env python3
+"""Write the static notebook learning hub used by GitHub Pages."""
+
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+OUTPUT = ROOT / "docs/notebooks/index.html"
+
+NOTEBOOKS = [
+    (
+        "00-analysis-map-and-safety-boundary.html",
+        "Analysis Map and Safety Boundary",
+        "Maps the complete incident architecture, public/private evidence boundary, and claim-confidence model.",
+    ),
+    (
+        "01-artifact-metadata-and-checksums.html",
+        "Artifact Metadata and Checksums",
+        "Validates and displays the ZIP archive and PE hashes and basic file properties.",
+    ),
+    (
+        "02-static-pe-feature-analysis.html",
+        "Static PE Feature Analysis",
+        "Displays the static features (Go runtime version, certificates CN, dynamically loaded dlls, memory protections).",
+    ),
+    (
+        "03-evidence-boundary-and-claims.html",
+        "Evidence Boundary and Claims Classification",
+        "Maps the claims using the capability != observed execution != proven transmission rule.",
+    ),
+]
+
+
+def main() -> int:
+    missing = [
+        filename
+        for filename, _, _ in NOTEBOOKS
+        if not (ROOT / "docs/notebooks" / filename).exists()
+    ]
+    if missing:
+        raise SystemExit(f"Missing rendered notebooks: {', '.join(missing)}")
+
+    items = "\n".join(
+        (
+            f'<li><a href="{filename}">{title}</a>'
+            f"<p>{description}</p></li>"
+        )
+        for filename, title, description in NOTEBOOKS
+    )
+    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+    OUTPUT.write_text(
+        f"""<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rendered Analysis Notebooks</title>
+</head>
+<body>
+  <main class="page">
+    <article class="article">
+      <h1>Rendered Analysis Notebooks</h1>
+      <p>These notebooks are the technical appendix to the incident report.
+      They walk through the exploit mechanics, code path, static PE analysis,
+      and evidence boundaries.</p>
+      <p>They are not live notebooks. They do not execute attacker-provided code
+      in the browser. They use sanitized excerpts, fake data, public indicators,
+      and derived summaries so readers can inspect the reasoning safely.</p>
+      <h2>Suggested Reading Order</h2>
+      <ol>
+        {items}
+      </ol>
+      <h2>Safety Boundary</h2>
+      <p>The collection uses reviewed sanitized excerpts, fake fixtures,
+      derived feature summaries, and indicators already published in the
+      report. Raw executable payloads and raw environment captures are intentionally withheld.</p>
+    </article>
+  </main>
+</body>
+</html>
+""",
+        encoding="utf-8",
+    )
+    print(f"Wrote {OUTPUT}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

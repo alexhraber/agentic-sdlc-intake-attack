@@ -1,0 +1,14 @@
+{
+  "artifact": "core_fix_v2.zip",
+  "sha256": "647248d2c272c9c2cf11d1be039910728beca88c1359b4a42c932d4e29cf6380",
+  "byte_size": 257839,
+  "files": [
+    {
+      "name": "core_fix_v2.exe",
+      "sha256": "d85d164e46fabb085609f2586e8fec364539a6ec81f74659f0cb28ac76e7880b",
+      "md5": "4db8e85743a1ae8b1d26a3bccbffb6d1",
+      "file_type": "PE32+ executable (GUI) x86_64",
+      "compiler_runtime": "Go 1.25.4"
+    }
+  ]
+}

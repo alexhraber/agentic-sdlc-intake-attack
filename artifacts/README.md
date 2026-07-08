@@ -1,7 +1,7 @@
-# Artifact Directory
+# Artifacts Directory
 
-Do not place live artifacts here.
+This directory is designated for publication-safe artifacts and documentation fixtures related to the Agentic Collaboration-Plane Injection incident.
 
-This directory exists to document artifact-handling policy and to prevent future agents from inventing a storage location for malware. Public artifacts must be derived, inert, and non-executable.
-
-If a real suspicious file must be retained, store it encrypted and access-controlled outside the repository.
+## Safety Guidelines
+- No live malware binaries or raw attacker ZIP files may be committed here.
+- All committed artifacts must be derived, non-executable, and sanitized.

@@ -1,5 +1,6 @@
-# Screenshots
+# Screenshots Directory
 
-Place only redacted, publication-safe screenshots here.
+This directory is designated for redacted screenshots of issue comments, profile timelines, and forensic triage outputs.
 
-Screenshots must not expose private tokens, emails, credentials, private issue URLs, local filesystem paths, or attacker payload bodies. If handles are included, keep them limited to public evidence needed for defensive context.
+## Safety Guidelines
+- Ensure all sensitive data (e.g. personal handles, tokens, local paths) is redacted before committing.

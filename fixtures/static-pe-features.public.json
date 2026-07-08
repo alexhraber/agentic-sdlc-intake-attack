@@ -1,0 +1,54 @@
+{
+  "artifact": "core_fix_v2.exe",
+  "sha256": "d85d164e46fabb085609f2586e8fec364539a6ec81f74659f0cb28ac76e7880b",
+  "features": [
+    {
+      "feature": "compiler_runtime",
+      "value": "Go 1.25.4",
+      "flagged": true,
+      "reason": "Suspicious compiler runtime mismatch for a simple repository fix"
+    },
+    {
+      "feature": "subsystem",
+      "value": "Windows GUI",
+      "flagged": true,
+      "reason": "Executable has a GUI subsystem, unusual for CLI development maintenance tools"
+    },
+    {
+      "feature": "module_path",
+      "value": "YHWntfKsr",
+      "flagged": true,
+      "reason": "Randomized/obfuscated module naming structure"
+    },
+    {
+      "feature": "decoy_strings",
+      "value": "Russian calendar/AVL-tree demo text",
+      "flagged": false,
+      "reason": "Potentially recycled demo code used to bypass basic static entropy/signatures"
+    },
+    {
+      "feature": "certificate_subject",
+      "value": "CN=computrabajo.com",
+      "flagged": true,
+      "reason": "Self-signed certificate with randomized field metadata claiming Spanish recruiting site domain"
+    },
+    {
+      "feature": "api_imports",
+      "value": ["advapi32.dll!GetUserNameA", "kernel32.dll!VirtualProtect"],
+      "flagged": true,
+      "reason": "Loads user identity APIs and changes memory page protection dynamically"
+    },
+    {
+      "feature": "hooking_behavior",
+      "value": "patching GetUserNameA with jump stub",
+      "flagged": true,
+      "reason": "Inline hook redirection suggests API interception or security bypass capability"
+    },
+    {
+      "feature": "hardcoded_token",
+      "value": "5a3f1c7f6f2f7421",
+      "flagged": true,
+      "reason": "Hardcoded string likely used for beacon or host identifier confirmation"
+    }
+  ]
+}

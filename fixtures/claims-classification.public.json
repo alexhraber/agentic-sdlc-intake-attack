@@ -1,0 +1,35 @@
+{
+  "safety_rule": "capability != observed execution != proven transmission",
+  "claims": [
+    {
+      "claim": "ZIP archive core_fix_v2.zip is hostile and contains a Windows x64 executable",
+      "classification": "CONFIRMED",
+      "basis": "Verified by static archive listing and file headers"
+    },
+    {
+      "claim": "The executable contains code to dynamically load VirtualProtect and patch GetUserNameA",
+      "classification": "CONFIRMED",
+      "basis": "Verified by static string and PE import table analysis"
+    },
+    {
+      "claim": "The attack target was the agentic SDLC intake loop",
+      "classification": "LIKELY",
+      "basis": "Supported by the context of agent-created issues and targeted comment alignment"
+    },
+    {
+      "claim": "The executable would have run and compromised an agent worktree if downloaded/run",
+      "classification": "POSSIBLE",
+      "basis": "Plausible path if the agent configuration lacks sandboxing and executes untrusted inputs"
+    },
+    {
+      "claim": "Attacker successfully exfiltrated credentials or established a network C2 channel",
+      "classification": "UNPROVEN",
+      "basis": "No execution was performed; no network command-and-control indicators were observed"
+    },
+    {
+      "claim": "The identity of the actor or origin country",
+      "classification": "UNPROVEN",
+      "basis": "No attribution evidence beyond public profile handles and self-signed certificate data"
+    }
+  ]
+}

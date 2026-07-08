@@ -1,5 +1,7 @@
-# Tools
+# Triage and Forensics Tools
 
-This directory is reserved for small defensive tools that do not execute attacker artifacts.
+This directory is designated for security triage scripts, decapod helpers, and forensic verification tools.
 
-Tools must be static-analysis-only by default. They may hash, list, parse metadata, or validate paths. They must not run, import, build, install, chmod, or execute supplied artifacts.
+## Safety Constraints
+- Scripts committed here must only perform static inspection (e.g. hashing, metadata listing, string extraction).
+- No script may automate the execution or compilation of untrusted code.
