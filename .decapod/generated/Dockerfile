@@ -9,10 +9,10 @@ ARG DECAPOD_USE_LOCAL_BINARY=0
 LABEL org.opencontainers.image.base.name="$DECAPOD_IMAGE"
 LABEL org.decapod.version="$DECAPOD_VERSION"
 RUN if command -v apk >/dev/null 2>&1; then \
-apk add --no-cache bash ca-certificates coreutils curl git openssh-client sqlite-libs; \
+apk add --no-cache bash ca-certificates coreutils curl git openssh-client py3-pip python3 sqlite-libs; \
 elif command -v apt-get >/dev/null 2>&1; then \
 apt-get update && \
-apt-get install -y --no-install-recommends bash ca-certificates coreutils curl git libsqlite3-0 openssh-client && \
+apt-get install -y --no-install-recommends bash ca-certificates coreutils curl git libsqlite3-0 openssh-client python3 python3-pip && \
 rm -rf /var/lib/apt/lists/*; \
 else \
 echo "No supported package manager found" >&2; exit 1; \
