@@ -1,0 +1,19 @@
+{
+  "fixture": true,
+  "description": "Harmless placeholder manifest for Agentic Collaboration-Plane Injection documentation.",
+  "warning": "This file is not an archive, not a binary, and not an executable payload.",
+  "example_artifact": {
+    "archive_name": "core_fix_v2.zip",
+    "payload_name": "core_fix_v2.exe",
+    "status": "not included",
+    "reason": "Raw malware and executable attacker artifacts are not published in this repository."
+  },
+  "allowed_public_fields": [
+    "filename",
+    "hash",
+    "file_type",
+    "static_observation",
+    "confidence",
+    "evidence_boundary"
+  ]
+}

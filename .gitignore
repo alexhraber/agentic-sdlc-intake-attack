@@ -19,3 +19,32 @@
 !.decapod/generated/specs/
 !.decapod/generated/specs/*.md
 !.decapod/generated/specs/.manifest.json
+
+# Safety guardrails for this incident-response repository.
+# Do not commit live malware samples, archives, executables, or raw host evidence.
+*.zip
+*.7z
+*.rar
+*.tar
+*.tar.gz
+*.tgz
+*.exe
+*.dll
+*.scr
+*.msi
+*.ps1
+*.bat
+*.cmd
+*.vbs
+*.jar
+*.elf
+*.macho
+*.dylib
+*.so
+*.env
+*.pcap
+*.pcapng
+quarantine/
+private-artifacts/
+malware/
+samples/

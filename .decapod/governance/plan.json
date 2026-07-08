@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0.0",
+  "title": "Document Agentic Collaboration-Plane Injection incident",
+  "intent": "Create a defensive incident-response write-up repository for agentic issue-comment artifact smuggling, using static-analysis-only evidence, IOCs, detection guidance, safe artifact handling, and agentic intake policy.",
+  "state": "DONE",
+  "todo_ids": [
+    "cicd_01kx1k1mh1w1r5z9"
+  ],
+  "proof_hooks": [
+    "decapod validate"
+  ],
+  "unknowns": [],
+  "human_questions": [],
+  "stop_conditions": [
+    "Do not execute attacker artifacts, install unknown packages, fetch live payloads, or commit malware."
+  ],
+  "unresolved_contradictions": [],
+  "deferred_questions": [],
+  "constraints": {
+    "forbidden_paths": [
+      "raw malware samples and executable attacker artifacts"
+    ],
+    "file_touch_budget": 30
+  },
+  "updated_at": "1783539497Z"
+}
