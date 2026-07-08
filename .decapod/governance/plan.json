@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0.0",
+  "title": "Initial Incident Write-up",
+  "intent": "Create defensive incident-response write-up repo for Agentic Collaboration-Plane Injection",
+  "state": "APPROVED",
+  "todo_ids": [
+    "cicd_01kx1k1mh1w1r5z9"
+  ],
+  "proof_hooks": [],
+  "unknowns": [],
+  "human_questions": [],
+  "stop_conditions": [],
+  "unresolved_contradictions": [],
+  "deferred_questions": [],
+  "constraints": {
+    "forbidden_paths": [],
+    "file_touch_budget": null
+  },
+  "updated_at": "1783542606Z"
+}
