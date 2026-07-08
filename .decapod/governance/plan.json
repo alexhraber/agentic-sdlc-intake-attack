@@ -4,7 +4,8 @@
   "intent": "Create a defensive incident-response write-up repository for agentic issue-comment artifact smuggling, using static-analysis-only evidence, IOCs, detection guidance, safe artifact handling, and agentic intake policy.",
   "state": "APPROVED",
   "todo_ids": [
-    "cicd_01kx1k1mh1w1r5z9"
+    "cicd_01kx1k1mh1w1r5z9",
+    "bugs_01kx1pjvrqhhe4xa"
   ],
   "proof_hooks": [
     "decapod validate"
