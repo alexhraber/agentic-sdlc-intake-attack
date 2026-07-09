@@ -82,3 +82,14 @@ Use precise labels:
 - **Likely:** supported by context and static evidence but not directly proven.
 - **Possible:** plausible risk path requiring additional evidence.
 - **Unproven:** not established by available evidence.
+
+## Core Fix v2.exe Analysis Findings
+
+- File type: PE32+ Windows GUI executable (x86‑64), 2.8 MiB.
+- PE Header: architecture i386:x86‑64, entry point `0x0000000140073280`, image base `0x0000000140000000`.
+- Sections observed: `.text`, `.rdata`, `.data`, `.pdata`, `.xdata`, `.idata`, `.reloc`, `.symtab`.
+- Imports from `kernel32.dll` include: WriteFile, WriteConsoleW, WerSetFlags, WerGetFlags, WaitForMultipleObjects, WaitForSingleObject, VirtualQuery, VirtualFree, VirtualAlloc, TlsAlloc, SwitchToThread, SuspendThread, SetWaitableTimer, SetProcessPriorityBoost, SetEvent, SetErrorMode, SetConsoleCtrlHandler, RtlVirtualUnwind, RtlLookupFunctionEntry.
+- Strings show Go build ID and decoy text, no obvious malicious payload.
+- YARA: no rules configured.
+- ClamAV: no detections.
+
