@@ -1,81 +1,37 @@
 # Security
 
 ## Threat Model
+The core threat is **Collaboration-Plane Injection**: smuggling hostile payloads into autonomous development workflows. The boundary of interest is the interface where natural-language comments and issue attachments cross into code execution or filesystem mutation.
+
 ```mermaid
-flowchart LR
-   U[User/Client] --> A[Application Boundary]
-   A --> D[(Data Stores)]
-   A --> X[External Dependencies]
-   I[Identity Provider] --> A
-   A --> L[Audit Logs]
+flowchart TD
+  Attacker --> |Attaches ZIP| GitHub[GitHub Issues Surface]
+  GitHub --> |Reads comments| Agent[Autonomous SDLC Agent]
+  Agent --> |Treats comment as command| ExecutionBridge[Shell / Extract / Install / Chmod]
+  ExecutionBridge --> |Compromise| Host[Workstation / Credentials / CI Keys]
 ```
 
 ## STRIDE Table
 | Threat | Surface | Mitigation | Verification |
 |---|---|---|---|
-| Spoofing | Auth boundary | strong auth + token validation | auth tests |
-| Tampering | State mutation APIs | integrity checks + RBAC | integration tests |
-| Repudiation | Critical actions | immutable audit logs | log review |
-| Information disclosure | Data at rest/in transit | encryption + classification | security scans |
-| Denial of service | Hot paths | rate limit + backpressure | load tests |
-| Elevation of privilege | Admin interfaces | least privilege + policy checks | authz tests |
+| **Spoofing** | Contributor identity | Treat all external profile data and names as untrusted. | Author profile age + sign checks |
+| **Tampering** | Working tree files | Sandbox execution; prevent agents from auto-writing from comments. | Strict intake rules + `git diff` review |
+| **Repudiation** | Intake changes | Require signed, cryptographic Git commits for all verified updates. | `commit.gpgsign = true` |
+| **Information disclosure** | Telemetry and logs | Omit live secrets, access tokens, and environment paths from public files. | Safety scan (`check-public-safety.sh`) |
+| **Denial of service** | Archive intake | Validate file size ratios and path depth in archives before listing. | `check_archive_paths.py` |
+| **Elevation of privilege** | Tool execution | Run tools in isolated, password-gated, non-root workspaces. | Podman/Docker non-root execution |
 
-## Authentication
-- Identity source:
-- Token/session lifetime:
-- Rotation and revocation:
-
-## Authorization
-- Role model:
-- Resource-level policy:
-- Privilege escalation controls:
+## Authentication & Authorization
+- **Human Gatekeeper**: Any operation that extracts files to the worktree, installs dependencies, runs tests, or runs terminal commands requires explicit human approval.
+- **Agent Authority**: The agent operates with read-only permissions for external sources and restricted write access in todo-scoped worktrees.
 
 ## Data Classification
-| Data Class | Examples | Storage Rules | Access Rules |
+| Data Class | Description | Storage Rules | Access Rules |
 |---|---|---|---|
-| Public | docs, non-sensitive metadata | standard | unrestricted |
-| Internal | operational telemetry | controlled | team access |
-| Sensitive | tokens, PII, secrets | encrypted | least privilege |
-
-## Sensitive Data Handling
-- Encryption at rest:
-- Encryption in transit:
-- Redaction in logs:
-- Retention + deletion policy:
+| **Public** | Hashed features, indicators, timeline, and sanitized notebooks | Committed to repository | Unrestricted |
+| **Private** | Attacker-provided ZIP files (`core_fix_v2.zip`) | Kept in isolated local quarantine outside worktree | Analyst only |
+| **Restricted** | Attacker-provided executables (`core_fix_v2.exe`) | Encrypted and stored offline | Forbidden from repository |
 
 ## Supply Chain Security
-- Recommended scanners: `pip-audit`, `safety`, `bandit`
-- Dependency update cadence:
-- Signed artifact/provenance strategy:
-
-## Secrets Management
-| Secret | Source | Rotation | Consumer |
-|---|---|---|---|
-| External service auth material | managed runtime configuration | periodic | runtime services |
-| Artifact signing material | managed signing service/local secure store | periodic | release pipeline |
-
-## Security Testing
-| Test Type | Cadence | Tooling |
-|---|---|---|
-| SAST | each PR | language linters/scanners |
-| Dependency scan | each PR + weekly | supply-chain tools |
-| DAST/pentest | scheduled | external/internal |
-
-## Compliance and Audit
-- Regulatory scope:
-- Audit evidence location:
-- Exception process:
-
-## Pre-Promotion Security Checklist
-- [ ] Threat model updated for changed surfaces.
-- [ ] Auth/authz tests pass.
-- [ ] Dependency vulnerability scan reviewed.
-- [ ] No unresolved critical/high security findings.
-
-## Strongest Security Primitives
-Describe the security primitives and security controls implemented in this repository.
-
-## Security Practices
-- **Least Privilege**: Ensure minimal access permissions for all subsystems and roles.
-- **Input Validation**: Strictly validate all inputs at trust boundaries.
-- **Secure Storage**: Encrypt sensitive data at rest and in transit.
+- **Pipeline Integrity**: Rebuilding the public notebooks runs inside network-isolated containers to prevent DNS or package hijacking during build.
+- **Scanners**: Checked via `check-public-safety.sh` to prevent inclusion of malicious JavaScript, iframe, or raw payload references in static files.\n

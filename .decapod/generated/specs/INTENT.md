@@ -56,29 +56,31 @@ flowchart LR
 ## Epistemic Custody Fields
 
 ### Active Assumptions
-- [ ] List any assumptions made to proceed.
-- [ ] Flag assumptions that require future verification.
+- The attacker used fake or newly generated GitHub accounts to search for agentic SDLC repositories.
+- The attacker specifically framed the ZIP as a repository fix to trick autonomous intake routines that read issue threads.
 
 ### Confidence & Risk Level
-- **Confidence**: Low/Medium/High (Rationale: )
-- **Risk**: Low/Medium/High (Impact of wrong assumptions: )
+- **Confidence**: High. The hashes, certificate strings, Go runtime metadata, and API patching behavior have been statically verified.
+- **Risk**: High. The vulnerability lies in the lack of an execution boundary in autonomous coding systems.
 
 ### Measured vs Inferred Facts
 | Fact | Source (Provenance) | Type (Measured/Inferred) |
 |---|---|---|
-| | | |
+| ZIP contains a GUI PE Windows binary | Static archive list and magic bytes | Measured |
+| Executable loads VirtualProtect and patches GetUserNameA | Imports table and string signatures | Measured |
+| The target was autonomous agent runtimes | Aligned comments on agent-created issues | Inferred |
 
 ### Unresolved Contradictions
-- [ ] List any evidence that conflicts with current assumptions or intent.
+- None. Static metadata maps cleanly to the documented threat surface.
 
 ### Deferred Questions
-- [ ] Questions to be answered later.
+- The exact C2 network configuration is unknown since no execution occurred.
 
 ### Stop Conditions
-- [ ] Explicit conditions under which the agent should stop and ask for help.
+- Stop immediately if any build script, notebook, or test command attempts to run the target binary or load external packages.
 
 ### Proof Required Before Completion
-- [ ] Specific evidence needed to prove the outcome is met.
+- Passed `decapod validate` run and completed verification baseline.
 
 ## Tradeoffs Register
 | Decision | Benefit | Cost | Review Trigger |

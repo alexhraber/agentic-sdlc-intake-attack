@@ -1,98 +1,53 @@
 # Validation
 
 ## Validation Philosophy
-> Validation is a release gate, not documentation theater.
+> Validation is a release gate, not documentation theater. In this repository, validation ensures that no dynamic malware execution occurs during compilation, no secrets are leaked, and the working tree is kept clean.
 
 ## Validation Harness
-Define the test and verification harness used by this project.
-Key features:
-- **Automated Tests**: Unit and integration test suites.
-- **Linting & Formatting**: Static analysis tools and checkers.
-- **CI/CD Integration**: Automatic execution of validation gates on push.
+The validation harness is implemented through local testing utilities and the Decapod governance validator:
+- **`scripts/check-public-safety.sh`**: Scans rendered HTML files for unexpected commands, inline script tags, raw paths, or traversal strings.
+- **`scripts/sanitize-notebooks.py`**: Ensures all code cells in the notebooks are cleared of dynamic execution output.
+- **`decapod validate`**: Runs control-plane gates locally and within the container workspace to check policy conformance, commit cleanliness, and spec alignment.
 
 ## Generated Spec Refresh Gates
-Decapod must keep generated specs synchronized at governance pressure points. When repository surfaces change, validation should either fail with a concrete refresh instruction or, when explicitly requested through a refresh path, regenerate the existing spec files and update the manifest fingerprint. Refresh must update the canonical spec set rather than creating one-off analysis files.
-
-Refresh-capable paths:
-- `decapod validate --refresh-specs`
-- `decapod rpc --op specs.refresh`
-- initialization or scaffold refresh paths that regenerate `.decapod/generated/specs/*.md`
-
-Refresh output requirements:
-- Preserve hand-maintained epistemic custody fields where possible.
-- Blend repo context into the existing canonical spec files.
-- Update `.decapod/generated/specs/.manifest.json` after writing files.
-- Avoid adding parallel project-state or architecture-survey documents outside the canonical spec set.
+To sync generated specs and prevent drift, run:
+```bash
+decapod rpc --op specs.refresh
+```
+This updates the specs manifest (`.decapod/generated/specs/.manifest.json`) with the latest cryptographic hashes of the markdown files under `.decapod/generated/specs/`.
 
 ## Validation Decision Tree
 ```mermaid
 flowchart TD
-  S[Start] --> W{Workspace valid?}
-  W -->|No| F1[Fail: workspace gate]
-  W -->|Yes| T{Tests pass?}
-  T -->|No| F2[Fail: test gate]
-  T -->|Yes| D{Docs + diagrams + changelog updated?}
-  D -->|No| F3[Fail: docs gate]
-  D -->|Yes| V[Run decapod validate]
-  V --> P{All blocking gates pass?}
-  P -->|No| F4[Fail: promotion blocked]
-  P -->|Yes| E[Emit promotion evidence]
-```
-
-## Promotion Flow
-```mermaid
-flowchart LR
-  A[Plan] --> B[Implement]
-  B --> C[Test]
-  C --> D[Validate]
-  D --> E[Assemble Evidence]
-  E --> F[Promote]
+  S[Start Build] --> P[Run build & render pipeline]
+  P --> C[Run check-public-safety.sh]
+  C -->|Fail| F1[Fail: Security Warning]
+  C -->|Pass| G[Check dirty files count < 6]
+  G -->|Fail| F2[Fail: Commit-often violation]
+  G -->|Pass| V[Run decapod validate]
+  V -->|Fail| F3[Fail: Spec or Plan mismatch]
+  V -->|Pass| E[Success: Validation Passed]
 ```
 
 ## Proof Surfaces
-- `decapod validate`
-- Required test commands:
-- `pytest`
-- Required integration/e2e commands:
-
-## Promotion Gates
+- **`decapod validate`**: Main entrypoint for checking all invariants (including dirty files count, session token freshness, and manifest validation).
+- **`decapod qa verify todo <task-id>`**: Verifies the task baseline output matches the generated verification manifest.
 
 ## Blocking Gates
-| Gate | Command | Evidence |
+| Gate | Command / Target | Evidence / Output |
 |---|---|---|
-| Architecture + interface drift check | `decapod validate` | Gate output |
-| Tests pass | project test command | CI + local logs |
-| Docs + changelog current | repo docs checks | PR diff |
-| Security critical checks pass | security scanner suite | scanner reports |
-
-## Warning Gates
-| Gate | Trigger | Follow-up SLA |
-|---|---|---|
-| Coverage regression warning | Coverage drops below target | 48h |
-| Non-blocking perf drift | P95 regression below hard threshold | 72h |
+| Archive Path Safety | `python3 scripts/check_archive_paths.py` | Command exit code `1` (if anomalies are found) |
+| Public Safety Scans | `bash scripts/check_public-safety.sh` | Verified clean notebooks without script tags or raw files |
+| Commit Cleanliness | `git status` check during validation | Blocks if more than 6 dirty files are in the worktree |
+| Plan Approval | Checked during `decapod validate` | Mismatch between local plan and root plan triggers block |
 
 ## Evidence Artifacts
-| Artifact | Path | Required For |
-|---|---|---|
-| Validation report | `.decapod/generated/artifacts/provenance/*` | Promotion |
-| Test logs | CI artifact store | Promotion |
-| Architecture diagram snapshot | `ARCHITECTURE.md` | Promotion |
-| Changelog entry | `CHANGELOG.md` | Promotion |
-
-## Regression Guardrails
-- Baseline references:
-- Statistical thresholds (if non-deterministic):
-- Rollback criteria:
+- **`.decapod/governance/plan.json`**: The approved plan tracking completion states of all tasks.
+- **`docs/notebooks/`**: Static rendered HTML pages reflecting the forensic appendix.
+- **`.decapod/generated/specs/.manifest.json`**: Cryptographic fingerprints of the specification files.
 
 ## Bounded Execution
 | Operation | Timeout | Failure Mode |
 |---|---|---|
-| Validation | 30s | timeout or lock |
-| Unit test suite | project-defined | non-zero exit |
-| Integration suite | project-defined | non-zero exit |
-
-## Coverage Checklist
-- [ ] Unit tests cover critical branches.
-- [ ] Integration tests cover key user flows.
-- [ ] Failure-path tests cover retries/timeouts.
-- [ ] Docs/diagram/changelog updates included.
+| `decapod validate` | 30s | Process termination / non-zero exit |
+| Containerized build | 120s | Network activity detected / package install fail |\n

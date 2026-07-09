@@ -1,116 +1,85 @@
 # Architecture
 
 ## Direction
-research
+Defensive incident writing and static compilation pipelines.
 
 ## What This Project Is
-agentic-sdlc-intake-attack is a to be confirmed project built using Python.
-research
+A static research hub designed to compile incident summaries, threat surfaces, detection criteria, and HTML rendered forensic workbooks safely from static JSON fixtures.
 
 Architectural principles:
-- **Simplicity**: Keep components focused and reusable.
-- **Modularity**: Clearly defined interface boundaries and dependency separation.
-- **Reliability**: Graceful failure handling and thorough verification.
+- **Zero-Execution Sandbox**: No pipeline step runs or executes the malware sample. Analysis is entirely static, driven by JSON data fixtures.
+- **Output Sanitization**: The notebook pipeline strictly filters and sanitizes notebook code cells to prevent dynamic state leakage.
+- **Decapod Scoping**: Workspace changes are isolated to branch-level worktrees and validated against the Decapod control plane before promotion.
 
 ## Current Facts
-- Runtime/languages: Python
-- Detected surfaces/framework hints: to be confirmed
-- Product type: to be confirmed
+- Runtime/languages: Python, Bash, HTML/CSS
+- Primary framework: nbconvert, nbformat, Jinja2 template engine
+- Product type: Static documentation and HTML forensic portal
 
 ## Architecture Map
-This project's architecture consists of the following key layers/directories:
-- `src/`: Main source directory containing primary logic.
-- `tests/`: Integration and unit test suite.
+The project's structure consists of the following key directories and files:
+- `notebooks/`: Source Jupyter notebooks compiled from static metadata.
+- `docs/notebooks/`: Clean, rendered HTML outputs, including the styled index dashboard.
+- `fixtures/`: JSON data fixtures representing the inspected PE binary features and claims classifications.
+- `scripts/`: Python and Bash scripts implementing the build, sanitize, render, and safety check pipeline.
+- `fixtures/static-pe-features.public.json`: Inert static signatures of the PE binary.
+- `fixtures/claims-classification.public.json`: Verified, likely, possible, and unproven claims boundaries.
 
 ## Data Flows
-- Inbound request/command parses and validates at the entrypoint.
-- Core runtime handles business logic and initiates queries or state changes.
-- Storage adapter reads or writes data to the underlying persistence layers.
+```mermaid
+flowchart TD
+  F[JSON Fixtures] --> |build-public-notebooks.py| N[Jupyter Notebooks]
+  N --> |sanitize-notebooks.py| SN[Sanitized Notebooks]
+  SN --> |render-notebooks.sh| H[Rendered HTML Notebooks]
+  SN --> |check-public-safety.sh| S[Safety Checks Passed]
+  H --> |write-notebook-index.py| I[Stunning Dashboard Index]
+```
 
 ## Strongest Existing Primitives
-- Define the strongest existing primitives in the codebase (e.g., helper utilities, base controllers, data access layers).
+- **`sanitize-notebooks.py`**: Ensures all code cells in the notebooks are cleared of dynamic execution output.
+- **`check-public-safety.sh`**: Scans the source and rendered workbooks for traversal paths, hidden payloads, and dynamic commands.
+- **`check_archive_paths.py`**: Inspects ZIP directory metadata to identify nested archives, absolute paths, or executable suffixes without extraction.
 
 ## Topology
 ```mermaid
 flowchart LR
-  C[Client] --> G[API Gateway]
-  G --> S[Service Core]
-  S --> W[Workers]
-  S --> DB[(Primary Datastore)]
-  W --> Q[(Queue)]
+  D[Decapod CLI] --> |Controls| W[Workspace Worktree]
+  W --> |Runs| C[Podman Container]
+  C --> |Builds & Renders| N[Forensic Hub]
 ```
 
 ## Store Boundaries
-```mermaid
-flowchart LR
-  I[Inbound Requests] --> C[Core Logic]
-  C --> W[(Write Store)]
-  C --> R[(Read Store)]
-```
+The repository contains two distinct storage classes:
+- **Workspace Source Directory**: Read-write zone for notebooks, scripts, and Markdown reports.
+- **Decapod Control State (`.decapod/`)**: Metadata stores, todo databases, and validation policy ledgers managed exclusively via the Decapod CLI.
 
 ## Happy Path Sequence
 ```mermaid
 sequenceDiagram
-  participant C as Client
-  participant G as API
-  participant D as Domain
-  participant DB as Datastore
-  C->>G: Request
-  G->>D: Validate + execute
-  D->>DB: Commit transaction
-  DB-->>D: Commit ok
-  D-->>G: Domain result
-  G-->>C: Response + trace_id
+  participant Dev as Developer / Agent
+  participant B as Build Script
+  participant S as Sanitize Tool
+  participant R as Render Script
+  participant V as Decapod Validator
+  Dev->>B: Run build-public-notebooks.py
+  B-->>Dev: Write .ipynb files from fixtures
+  Dev->>S: Run sanitize-notebooks.py
+  S-->>Dev: Clear execution cells and dynamic outputs
+  Dev->>R: Run render-notebooks.sh
+  R-->>Dev: Generate HTML pages + Styled Index Dashboard
+  Dev->>V: Run decapod validate
+  V-->>Dev: Check limits & verify passes
 ```
-
-## Error Path
-```mermaid
-sequenceDiagram
-  participant Client
-  participant Service
-  participant Store
-  Client->>Service: Request
-  Service->>Store: Database Query
-  Store--xService: Error/Timeout
-  Service-->>Client: Typed Error / Recovery Instructions
-```
-
-## Execution Path
-- Ingress parse + validation:
-- Policy/interlock checks:
-- Core execution + persistence:
-- Verification and artifact emission:
-
-## Concurrency and Runtime Model
-- Execution model:
-- Isolation boundaries:
-- Backpressure strategy:
-- Shared state synchronization:
-
-## Deployment Topology
-- Runtime units:
-- Region/zone model:
-- Rollout strategy (blue/green/canary):
-- Rollback trigger and blast-radius scope:
-
-## Data and Contracts
-- Inbound contracts (CLI/API/events):
-- Outbound dependencies (datastores/queues/external APIs):
-- Data ownership boundaries:
-- Schema evolution + migration policy:
 
 ## ADR Register
 | ADR | Title | Status | Rationale | Date |
 |---|---|---|---|---|
-| ADR-001 | Initial topology choice | Proposed | Define first stable architecture | YYYY-MM-DD |
-
-## Delivery Plan (first 3 slices)
-- Slice 1 (ship first):
-- Slice 2:
-- Slice 3:
+| ADR-001 | JSON-Driven Notebook Generation | Approved | Generate notebooks from inert JSON to avoid executing untrusted commands on the build machine. | 2026-07-08 |
+| ADR-002 | Containerized Renders | Approved | Run the nbconvert compilation inside a network-isolated Podman container to protect the host. | 2026-07-08 |
+| ADR-003 | Glassmorphic Hub Interface | Approved | Implement a high-aesthetic CSS dark-mode dashboard for the notebook landing page to improve developer UX. | 2026-07-08 |
 
 ## Risks and Mitigations
 | Risk | Likelihood | Impact | Mitigation |
 |---|---|---|---|
-| Contract drift across components | Medium | High | Spec + schema checks in CI |
-| Runtime saturation under peak load | Medium | High | Capacity model + load tests |
+| Accidental execution of sample | Low | Critical | Strict quarantine policy; binary is never run, only static metadata is analyzed. |
+| Clean working tree violation | Medium | Low | Maintain strict commit frequency to satisfy Decapod's 6-dirty-file validator limit. |\n
