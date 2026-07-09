@@ -74,6 +74,7 @@ Flag an archive when:
 Flag a binary when static inspection shows:
 
 - `VirtualProtect`, `VirtualAlloc`, `WriteProcessMemory`, `CreateRemoteThread`, `LoadLibrary`, `GetProcAddress`, `GetUserNameA/W`, `Crypt*`, `WinHttp*`, or `Internet*` imports;
+- Additional observed imports in core_fix_v2.exe: `WriteFile`, `WriteConsoleW`, `VirtualQuery`, `VirtualFree`, `SuspendThread`, `SetWaitableTimer`, `SetProcessPriorityBoost`, `SetEvent`, `SetErrorMode`, `SetConsoleCtrlHandler`, `RtlVirtualUnwind`, `RtlLookupFunctionEntry`.
 - packed or high-entropy sections;
 - mismatched or suspicious signing metadata;
 - randomized module paths or symbols;

@@ -1,0 +1,313 @@
+{
+  "file_header": {
+    "machine": "0x8664",
+    "number_of_sections": 8,
+    "time_date_stamp": 0,
+    "characteristics": "0x22"
+  },
+  "optional_header": {
+    "magic": "0x20b",
+    "entry_point": "0x73280",
+    "image_base": "0x140000000",
+    "subsystem": 2
+  },
+  "sections": [
+    {
+      "name": ".text",
+      "virtual_size": "0xbb571",
+      "raw_size": "0xbb600",
+      "entropy": 6.285
+    },
+    {
+      "name": ".rdata",
+      "virtual_size": "0x1d4778",
+      "raw_size": "0x1d4800",
+      "entropy": 7.1822
+    },
+    {
+      "name": ".data",
+      "virtual_size": "0x56988",
+      "raw_size": "0xd600",
+      "entropy": 4.1215
+    },
+    {
+      "name": ".pdata",
+      "virtual_size": "0x4c38",
+      "raw_size": "0x4e00",
+      "entropy": 5.1429
+    },
+    {
+      "name": ".xdata",
+      "virtual_size": "0xb4",
+      "raw_size": "0x200",
+      "entropy": 1.7832
+    },
+    {
+      "name": ".idata",
+      "virtual_size": "0x53e",
+      "raw_size": "0x600",
+      "entropy": 4.0126
+    },
+    {
+      "name": ".reloc",
+      "virtual_size": "0x3c10",
+      "raw_size": "0x3e00",
+      "entropy": 5.3985
+    },
+    {
+      "name": ".symtab",
+      "virtual_size": "0x1aea1",
+      "raw_size": "0x1b000",
+      "entropy": 5.051
+    }
+  ],
+  "directories": [
+    {
+      "name": "IMAGE_DIRECTORY_ENTRY_IMPORT",
+      "virtual_address": "0x2ef000",
+      "size": "0x53e"
+    },
+    {
+      "name": "IMAGE_DIRECTORY_ENTRY_EXCEPTION",
+      "virtual_address": "0x2e9000",
+      "size": "0x4c38"
+    },
+    {
+      "name": "IMAGE_DIRECTORY_ENTRY_SECURITY",
+      "virtual_address": "0x2c1e00",
+      "size": "0x988"
+    },
+    {
+      "name": "IMAGE_DIRECTORY_ENTRY_BASERELOC",
+      "virtual_address": "0x2f0000",
+      "size": "0x3c10"
+    },
+    {
+      "name": "IMAGE_DIRECTORY_ENTRY_IAT",
+      "virtual_address": "0x292180",
+      "size": "0x178"
+    }
+  ],
+  "imports": {
+    "kernel32.dll": [
+      {
+        "name": "WriteFile",
+        "address": "0x140292180"
+      },
+      {
+        "name": "WriteConsoleW",
+        "address": "0x140292188"
+      },
+      {
+        "name": "WerSetFlags",
+        "address": "0x140292190"
+      },
+      {
+        "name": "WerGetFlags",
+        "address": "0x140292198"
+      },
+      {
+        "name": "WaitForMultipleObjects",
+        "address": "0x1402921a0"
+      },
+      {
+        "name": "WaitForSingleObject",
+        "address": "0x1402921a8"
+      },
+      {
+        "name": "VirtualQuery",
+        "address": "0x1402921b0"
+      },
+      {
+        "name": "VirtualFree",
+        "address": "0x1402921b8"
+      },
+      {
+        "name": "VirtualAlloc",
+        "address": "0x1402921c0"
+      },
+      {
+        "name": "TlsAlloc",
+        "address": "0x1402921c8"
+      },
+      {
+        "name": "SwitchToThread",
+        "address": "0x1402921d0"
+      },
+      {
+        "name": "SuspendThread",
+        "address": "0x1402921d8"
+      },
+      {
+        "name": "SetWaitableTimer",
+        "address": "0x1402921e0"
+      },
+      {
+        "name": "SetProcessPriorityBoost",
+        "address": "0x1402921e8"
+      },
+      {
+        "name": "SetEvent",
+        "address": "0x1402921f0"
+      },
+      {
+        "name": "SetErrorMode",
+        "address": "0x1402921f8"
+      },
+      {
+        "name": "SetConsoleCtrlHandler",
+        "address": "0x140292200"
+      },
+      {
+        "name": "RtlVirtualUnwind",
+        "address": "0x140292208"
+      },
+      {
+        "name": "RtlLookupFunctionEntry",
+        "address": "0x140292210"
+      },
+      {
+        "name": "ResumeThread",
+        "address": "0x140292218"
+      },
+      {
+        "name": "RaiseFailFastException",
+        "address": "0x140292220"
+      },
+      {
+        "name": "PostQueuedCompletionStatus",
+        "address": "0x140292228"
+      },
+      {
+        "name": "LoadLibraryW",
+        "address": "0x140292230"
+      },
+      {
+        "name": "LoadLibraryExW",
+        "address": "0x140292238"
+      },
+      {
+        "name": "SetThreadContext",
+        "address": "0x140292240"
+      },
+      {
+        "name": "GetThreadContext",
+        "address": "0x140292248"
+      },
+      {
+        "name": "GetSystemInfo",
+        "address": "0x140292250"
+      },
+      {
+        "name": "GetSystemDirectoryA",
+        "address": "0x140292258"
+      },
+      {
+        "name": "GetStdHandle",
+        "address": "0x140292260"
+      },
+      {
+        "name": "GetQueuedCompletionStatusEx",
+        "address": "0x140292268"
+      },
+      {
+        "name": "GetProcessAffinityMask",
+        "address": "0x140292270"
+      },
+      {
+        "name": "GetProcAddress",
+        "address": "0x140292278"
+      },
+      {
+        "name": "GetErrorMode",
+        "address": "0x140292280"
+      },
+      {
+        "name": "GetEnvironmentStringsW",
+        "address": "0x140292288"
+      },
+      {
+        "name": "GetCurrentThreadId",
+        "address": "0x140292290"
+      },
+      {
+        "name": "GetConsoleMode",
+        "address": "0x140292298"
+      },
+      {
+        "name": "FreeEnvironmentStringsW",
+        "address": "0x1402922a0"
+      },
+      {
+        "name": "ExitProcess",
+        "address": "0x1402922a8"
+      },
+      {
+        "name": "DuplicateHandle",
+        "address": "0x1402922b0"
+      },
+      {
+        "name": "CreateWaitableTimerExW",
+        "address": "0x1402922b8"
+      },
+      {
+        "name": "CreateThread",
+        "address": "0x1402922c0"
+      },
+      {
+        "name": "CreateIoCompletionPort",
+        "address": "0x1402922c8"
+      },
+      {
+        "name": "CreateEventA",
+        "address": "0x1402922d0"
+      },
+      {
+        "name": "CloseHandle",
+        "address": "0x1402922d8"
+      },
+      {
+        "name": "AddVectoredExceptionHandler",
+        "address": "0x1402922e0"
+      },
+      {
+        "name": "AddVectoredContinueHandler",
+        "address": "0x1402922e8"
+      }
+    ]
+  },
+  "security_certificate": {
+    "offset": "0x2c1e00",
+    "size": "0x988",
+    "length": 2440,
+    "revision": "0x200",
+    "cert_type": "0x2",
+    "excerpts": [
+      {
+        "keyword": "O",
+        "offset": 97,
+        "context": "....<.<.<.O.b.s.o.l.e.t.e.>.>.>0!0...+........(.].+.u...d.X%"
+      },
+      {
+        "keyword": "L",
+        "offset": 554,
+        "context": "1.*F.\".PN}L.G...WA..6y....y..-.>.x6.+.v.......V.a.D.4.D....."
+      },
+      {
+        "keyword": "S",
+        "offset": 209,
+        "context": "0...U....US1.0...U....jNjlG5whh1.0...U....dz6fwo1.0...U....Z"
+      },
+      {
+        "keyword": "C",
+        "offset": 700,
+        "context": "....~...9.C.}.....W..Q.?H.....t./...~.S..S$l.R..^|.......F.."
+      },
+      {
+        "keyword": "computrabajo",
+        "offset": 281,
+        "context": ".0...U....computrabajo.com0...260707152321Z..270707152321Z0d"
+      }
+    ]
+  }
+}

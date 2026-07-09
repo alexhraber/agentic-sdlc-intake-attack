@@ -201,6 +201,72 @@ for c in claims_data["claims"]:
                 ),
             ],
         ),
+        "04-deep-pe-dissection.ipynb": notebook(
+            "Deep PE Dissection and Reverse Engineering",
+            [
+                md(
+                    """
+## Static Reverse Engineering Findings
+
+To reconstruct the binary's behavior without execution, we parse its Portable Executable (PE) headers, section layout, import tables, and certificate directory.
+"""
+                ),
+                py(
+                    """
+import json
+from pathlib import Path
+
+# Load detailed PE dissection fixture
+dissection = json.loads(Path("../fixtures/detailed-pe-dissection.public.json").read_text())
+
+# Display file headers
+print("=== PE FILE HEADERS ===")
+for k, v in dissection["file_header"].items():
+    print(f"{k.upper():<20}: {v}")
+
+print("\n=== OPTIONAL HEADER ===")
+for k, v in dissection["optional_header"].items():
+    print(f"{k.upper():<20}: {v}")
+"""
+                ),
+                py(
+                    """
+print("=== SECTION ENTROPY & CHARACTERISTICS ===")
+for sec in dissection["sections"]:
+    print(f"Name: {sec['name']:<8} | VirtualSize: {sec['virtual_size']:<10} | RawSize: {sec['raw_size']:<10} | Entropy: {sec['entropy']:.4f}")
+"""
+                ),
+                py(
+                    """
+print("=== DYNAMIC DLL IMPORTS ===")
+for dll, imps in dissection["imports"].items():
+    print(f"\\nImported DLL: {dll}")
+    # Print the first 15 imports for readability
+    for imp in imps[:15]:
+        print(f"  - {imp['name']:<30} at address {imp['address']}")
+    if len(imps) > 15:
+        print(f"  ... and {len(imps) - 15} more functions")
+"""
+                ),
+                py(
+                    """
+cert = dissection["security_certificate"]
+if cert:
+    print("=== SECURITY DIRECTORY & CERTIFICATE SIGNATURE ===")
+    print(f"Directory Offset : {cert['offset']}")
+    print(f"Directory Size   : {cert['size']} bytes")
+    print(f"Cert Length      : {cert['length']} bytes")
+    print(f"Revision         : {cert['revision']}")
+    print(f"Cert Type        : {cert['cert_type']}")
+    print("\\nCertificate Subject/Issuer Excerpts:")
+    for exc in cert["excerpts"]:
+        print(f"  [{exc['keyword']}] Offset {exc['offset']}: {exc['context']}")
+else:
+    print("Unsigned binary.")
+"""
+                ),
+            ],
+        ),
     }
 
 
