@@ -5,7 +5,8 @@
   "state": "APPROVED",
   "todo_ids": [
     "cicd_01kx1k1mh1w1r5z9",
-    "bugs_01kx1pjvrqhhe4xa"
+    "bugs_01kx1pjvrqhhe4xa",
+    "cicd_01kx20y0drxy4mg8"
   ],
   "proof_hooks": [
     "decapod validate"
@@ -23,5 +24,5 @@
     ],
     "file_touch_budget": 30
   },
-  "updated_at": "1783552185Z"
+  "updated_at": "1783555763Z"
 }
