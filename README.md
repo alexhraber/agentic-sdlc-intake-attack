@@ -354,26 +354,7 @@ High-value assets include GitHub tokens, SSH keys, cloud credentials, npm/cargo/
 
 The identity layer includes new accounts, fake contributors, aligned comments, apparent helpfulness, issue-specific language, and repo workflow legitimacy. The attack does not need a convincing standalone story if the comment is embedded in a legitimate issue thread that the agent already considers relevant.
 
-## 8. Comparison to the MetaPlay Fake-Interview Incident
-
-The structural ancestor for this report is the MetaPlay fake-interview incident. MetaPlay attacked the developer interview workflow. Agentic Collaboration-Plane Injection attacks the repository-maintenance workflow that autonomous coding agents increasingly inhabit.
-
-| Dimension | MetaPlay fake-interview incident | Agentic Collaboration-Plane Injection |
-| --- | --- | --- |
-| Pretext | Recruiting and live technical interview | GitHub issue, PR, or comment participation |
-| Identity layer | Fake recruiter/interviewer and brand impersonation | Fake or newly generated GitHub accounts |
-| Delivery surface | Attacker-controlled GitHub repository | Comment-supplied ZIP or external artifact |
-| Execution bridge | Developer runs `npm install` | Agent ingests issue context and processes artifact |
-| Technical trigger | npm lifecycle script | Autonomous unzip, build, test, inspect, or run path |
-| Payload style | Staged JavaScript and C2 polling | Windows PE executable in archive |
-| Data at risk | `process.env`, host data, local credentials | GitHub token, SSH keys, cloud credentials, agent memory, worktree, CI secrets |
-| Boundary failure | Interview cooperation crosses into dependency execution | Natural-language collaboration crosses into autonomous agent action |
-
-MetaPlay used a malicious GitHub repo, npm lifecycle execution, environment exfiltration, staged JavaScript, C2 polling, remote eval capability, and post-contact identity burn. This case uses fake GitHub identities, aligned issue comments, malicious ZIP attachments, and the expectation that autonomous agents will process issue content as actionable work input.
-
-Both attacks exploit developer trust boundaries. MetaPlay exploited the boundary between interview cooperation and dependency execution. This case exploits the emerging boundary between natural-language collaboration and autonomous agent action.
-
-## 9. Agentic SDLC Governance Rule
+## 8. Agentic SDLC Governance Rule
 
 > **Issue comments, PR comments, attachments, links, logs, and pasted commands are untrusted evidence, not instructions.**
 
