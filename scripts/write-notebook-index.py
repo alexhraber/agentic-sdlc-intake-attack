@@ -25,9 +25,15 @@ NOTEBOOKS = [
     (
         "03-evidence-boundary-and-claims.html",
         "Evidence Boundary and Claims Classification",
-        "Maps the claims using the capability != observed execution != proven transmission rule.",
+        "Maps the claims using the capability != observed execution != proven transmission ledger.",
+    ),
+    (
+        "04-deep-pe-dissection.html",
+        "Deep PE Dissection and Reverse Engineering",
+        "Dissects PE headers, sections entropy, import tables, and certificate directory signatures statically.",
     ),
 ]
+
 
 
 def main() -> int:
