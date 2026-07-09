@@ -1,37 +1,78 @@
 # Operations
 
 ## Operational Readiness Checklist
-- [x] Containment guidelines and safe publication policies linked in the root repository.
-- [x] Static build verification scripts integrated into the pipeline.
-- [x] Rendered notebook output directory configured for static server hosting (e.g. GitHub Pages).
-- [x] Decapod validation hooks active on pre-commit and pre-promotion gates.
+- [ ] On-call ownership defined.
+- [ ] SLOs and alert thresholds defined.
+- [ ] Dashboards for latency/errors/throughput are live.
+- [ ] Runbooks linked for all Sev1/Sev2 alerts.
+- [ ] Rollback plan validated.
+- [ ] Capacity guardrails documented.
 
 ## Deployment Model
-The repository is deployed as a static web site to GitHub Pages:
-- Renders are compiled within the container workspace.
-- Changes are pushed to `origin:main`.
-- Deployment pipelines rebuild and serve `docs/notebooks/index.html` as the entry dashboard.
+Describe the operational runtime model, scheduling, and system deployment architecture.
 
 ## Service Level Objectives
 | SLI | SLO Target | Measurement Window | Owner |
 |---|---|---|---|
-| Dashboard Availability | 99.9% (served via CDN/Pages) | 30d | Platform Security Team |
-| P95 Page Load | < 300ms (highly optimized CSS/HTML) | 7d | Platform Security Team |
-| Build Pipeline Success | > 99% (zero-flake static compiler) | 30d | DevSecOps |
+| Availability | 99.9% | 30d | TBD |
+| P95 latency | TBD | 7d | TBD |
+| Error rate | < 1% | 7d | TBD |
 
 ## Monitoring
-Since the output is static HTML/CSS, monitoring relies on the hosting platform's performance and availability signals:
-- **Build Alerts**: Notifications are sent via email or Slack if the GitHub Action build container encounters an compilation or validation failure.
-- **Access Logs**: Standard web server logs tracking client fetches of HTML pages and CSS assets.
+| Signal | Metric | Threshold | Alert |
+|---|---|---|---|
+| Traffic | requests/sec | baseline drift | warn |
+| Latency | p95/p99 | threshold breach | page |
+| Reliability | error ratio | threshold breach | page |
+| Saturation | cpu/memory/queue depth | sustained high | page |
 
-## Incident Response (Post-Incident Guide)
-1. **Detection**: Identify anomalous issue comments containing ZIP attachments or external download links.
-2. **Quarantine**: Copy the ZIP file path to a remote, network-isolated workspace.
-3. **Verify Integrity**: Compute SHA-256 signatures of the ZIP archive and PE executable.
-4. **Draft Post-Mortem**: Document findings in the `TIMELINE.md` and update `IOCS.md` with the new signatures.
-5. **Publish**: Re-run the compile pipeline to update the rendered hub and push to main.
+## Health Checks
+- Liveness:
+- Readiness:
+- Dependency health:
+- Synthetic transaction:
+
+## Incident Response
+- Detection:
+- Triage:
+- Mitigation:
+- Communication:
+- Post-mortem:
+
+## Rollout Strategy
+- Blue/green deployment:
+- Canary release:
+- Rolling update:
+- Feature flags:
+
+## Capacity Planning
+- Traffic patterns:
+- Resource utilization:
+- Scaling triggers:
+
+## Logging
+Use `structlog` (or stdlib logging JSON formatter) with request_id, task_id, and outcome fields.
 
 ## Secrets Management
-This project contains no runtime API secrets or database credentials:
-- **Signing Keys**: Developer commits are signed locally using GPG/SSH keys stored on secure hardware tokens.
-- **Access Tokens**: GitHub push tokens are handled securely via `gh` CLI helper integration.\n
+| Secret | Source | Rotation | Consumer |
+|---|---|---|---|
+| External service auth material | managed runtime configuration | periodic | runtime services |
+| Artifact signing material | managed signing service/local secure store | periodic | release pipeline |
+
+## Security Testing
+| Test Type | Cadence | Tooling |
+|---|---|---|
+| SAST | each PR | language linters/scanners |
+| Dependency scan | each PR + weekly | supply-chain tools |
+| DAST/pentest | scheduled | external/internal |
+
+## Compliance and Audit
+- Regulatory scope:
+- Audit evidence location:
+- Exception process:
+
+## Pre-Promotion Security Checklist
+- [ ] Threat model updated for changed surfaces.
+- [ ] Auth/authz tests pass.
+- [ ] Dependency vulnerability scan reviewed.
+- [ ] No unresolved critical/high security findings.
