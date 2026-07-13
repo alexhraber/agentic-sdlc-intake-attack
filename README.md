@@ -1,5 +1,7 @@
 # Agentic Collaboration-Plane Injection: GitHub Issue Comment Artifact Smuggling Against Autonomous Coding Agents
 
+[![🦀 Decapod](https://img.shields.io/badge/🦀%20Decapod-v0.66.3-dc2626)](https://github.com/DecapodLabs/decapod)
+
 > **Defensive disclosure note:** This write-up is published for defensive awareness and incident-response education. It documents an observed collaboration-plane attack pattern involving fake or newly generated GitHub accounts, issue comments, ZIP attachments, and agentic workflow risk. It intentionally avoids publishing live malware, executable attacker payloads, working exploit material, secrets, or raw hostile artifacts. Attribution is not asserted beyond the evidence described.
 
 This write-up documents an observed collaboration-plane attack against agentic software development. Fake or newly generated GitHub accounts used issue comments and malicious ZIP artifacts to exploit the gap between human-readable project context and autonomous agent action. No live malware, executable payload, secrets, or working exploit material is published.
